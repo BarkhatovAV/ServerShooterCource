@@ -43,7 +43,6 @@ export class State extends Schema {
         const player = new Player();
         player.hp = data.hp;
         player.speed = data.speed;
-
         this.players.set(sessionId, player);
     }
 
@@ -82,8 +81,11 @@ export class StateHandlerRoom extends Room<State> {
 
         this.onMessage("shoot", (client, data) => {
             this.broadcast("Shoot", data, {except: client});
+        });
 
-        })
+        this.onMessage("crouch", (client, data) => {
+            this.broadcast("Crouch", data, {except: client});
+        }); 
     }
 
     onAuth(client, options, req) {
